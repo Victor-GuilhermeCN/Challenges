@@ -14,7 +14,6 @@ except Exception as error:
 
 
 class Student:
-    student_id_list = []
     def __init__(self, student_id, name):
         self.student_id = student_id
         self.name = name
@@ -55,6 +54,21 @@ class Student:
             con.commit()
             con.close()
 
+    # Select
+    def get_student_bd(self):
+        try:
+            list_student_id = []
+            list_name = []
+            cursor.execute('SELECT * FROM student where student_id = %s', (self.student_id,))
+            for i in cursor.fetchall():
+                list_student_id.append(i[0])
+                list_name.append(i[1])
+        except Exception as error_select:
+            print('Problems in the Select')
+            print(error_select)
+        else:
+            print(f'ID: {list_student_id[0]}\n'
+                  f'Name: {list_name[0]}')
 
 # def get_aluno():
 #     try:
@@ -69,8 +83,9 @@ class Student:
 #         student.register_student(student_id, name)
 
 
-student2 = Student('10', 'João')
-line()
+student2 = Student('2', 'João')
+#student2.insert_student(student2.student_id, student2.name)
 #student2.update_student('Lax')
 #line()
-student2.delete_student()
+line()
+student2.get_student_bd()
